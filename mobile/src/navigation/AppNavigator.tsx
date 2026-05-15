@@ -33,8 +33,8 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveBackgroundColor: colors.header,
-        tabBarActiveTintColor: '#ffffff',
+        tabBarActiveBackgroundColor: 'transparent',
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.muted,
         tabBarLabelStyle: {fontSize: 11, fontWeight: '800'},
         tabBarItemStyle: {
@@ -47,8 +47,8 @@ function MainTabs() {
           borderTopColor: colors.border,
           borderTopWidth: 1,
           elevation: 12,
-          height: 104,
-          paddingBottom: 40,
+          height: 84,
+          paddingBottom: 20,
           paddingHorizontal: 8,
           paddingTop: 8,
           shadowColor: colors.header,
