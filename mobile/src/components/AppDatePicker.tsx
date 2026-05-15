@@ -1,8 +1,5 @@
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import React, {useMemo, useState} from 'react';
-import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useMemo} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {colors, sharedStyles} from '../theme/styles';
 import {formatDate} from '../utils/date';
 
@@ -17,33 +14,44 @@ export function AppDatePicker({
   value,
   onChange,
 }: Props): React.JSX.Element {
-  const [isOpen, setIsOpen] = useState(false);
   const selectedDate = useMemo(() => parseDate(value), [value]);
 
-  const handleChange = (event: DateTimePickerEvent, date?: Date) => {
-    if (Platform.OS === 'android') {
-      setIsOpen(false);
-    }
+  const changeByDays = (days: number) => {
+    const nextDate = new Date(selectedDate);
+    nextDate.setDate(nextDate.getDate() + days);
+    onChange(nextDate.toISOString());
+  };
 
-    if (event.type === 'set' && date) {
-      onChange(date.toISOString());
-    }
+  const setToday = () => {
+    onChange(new Date().toISOString());
   };
 
   return (
     <View>
       <Text style={sharedStyles.fieldLabel}>{label}</Text>
-      <Pressable style={styles.dateButton} onPress={() => setIsOpen(true)}>
+      <View style={styles.dateBox}>
         <Text style={styles.dateText}>{formatDate(value)}</Text>
-      </Pressable>
-      {isOpen ? (
-        <DateTimePicker
-          display="default"
-          mode="date"
-          onChange={handleChange}
-          value={selectedDate}
-        />
-      ) : null}
+        <View style={styles.actions}>
+          <Pressable
+            accessibilityLabel={`Poprzedni dzień: ${label}`}
+            onPress={() => changeByDays(-1)}
+            style={styles.dateButton}>
+            <Text style={styles.dateButtonText}>- dzień</Text>
+          </Pressable>
+          <Pressable
+            accessibilityLabel={`Dzisiejsza data: ${label}`}
+            onPress={setToday}
+            style={styles.dateButton}>
+            <Text style={styles.dateButtonText}>Dzisiaj</Text>
+          </Pressable>
+          <Pressable
+            accessibilityLabel={`Następny dzień: ${label}`}
+            onPress={() => changeByDays(1)}
+            style={styles.dateButton}>
+            <Text style={styles.dateButtonText}>+ dzień</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }
@@ -58,18 +66,35 @@ function parseDate(value?: string | null) {
 }
 
 const styles = StyleSheet.create({
-  dateButton: {
+  actions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 10,
+  },
+  dateBox: {
     backgroundColor: '#ffffff',
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
-    justifyContent: 'center',
-    minHeight: 44,
-    paddingHorizontal: 12,
+    padding: 12,
+  },
+  dateButton: {
+    backgroundColor: '#eef3f8',
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  dateButtonText: {
+    color: colors.header,
+    fontSize: 13,
+    fontWeight: '800',
   },
   dateText: {
     color: colors.text,
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: '800',
   },
 });

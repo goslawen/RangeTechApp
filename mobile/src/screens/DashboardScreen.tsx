@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -9,15 +9,19 @@ import {
   View,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ApiHealth, ApiRecord, getRecords} from '../api/client';
 import {AppHeader} from '../components/AppHeader';
-import {resources, ResourceConfig} from '../features/resources';
+import {resources} from '../features/resources';
 import {RootStackParamList} from '../navigation/AppNavigator';
 import {colors, sharedStyles} from '../theme/styles';
 import {useServiceApp} from '../context/ServiceAppContext';
 
 type Navigation = NativeStackNavigationProp<RootStackParamList>;
+
+const dashboardLabels: Partial<Record<string, string>> = {
+  serviceParts: 'Części zapasowe',
+};
 
 export function DashboardScreen(): React.JSX.Element {
   const navigation = useNavigation<Navigation>();
@@ -38,19 +42,19 @@ export function DashboardScreen(): React.JSX.Element {
         }),
       );
       setCounts(Object.fromEntries(entries));
-    } catch (caughtError) {
-      const message =
-        caughtError instanceof Error ? caughtError.message : 'Błąd API';
-      setStatsError(message);
+    } catch {
+      setStatsError('Nie udało się odświeżyć dashboardu.');
     } finally {
       setStatsLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    refreshHealth();
-    loadStats();
-  }, [loadStats, refreshHealth]);
+  useFocusEffect(
+    useCallback(() => {
+      refreshHealth();
+      loadStats();
+    }, [loadStats, refreshHealth]),
+  );
 
   return (
     <View style={sharedStyles.container}>
@@ -69,15 +73,26 @@ export function DashboardScreen(): React.JSX.Element {
 
         {statsError ? (
           <View style={sharedStyles.errorBox}>
-            <Text style={sharedStyles.errorText}>
-              Nie udało się pobrać statystyk: {statsError}
-            </Text>
+            <Text style={sharedStyles.errorText}>{statsError}</Text>
           </View>
         ) : null}
 
         <View style={styles.statsHeader}>
           <Text style={styles.sectionTitle}>Statystyki</Text>
-          {statsLoading ? <ActivityIndicator color={colors.primary} /> : null}
+          <View style={styles.statsActions}>
+            {statsLoading ? (
+              <View style={styles.loadingInline}>
+                <ActivityIndicator color={colors.primary} size="small" />
+                <Text style={sharedStyles.muted}>Odświeżanie...</Text>
+              </View>
+            ) : null}
+            <Pressable
+              disabled={statsLoading}
+              onPress={loadStats}
+              style={[sharedStyles.button, styles.refreshStatsButton]}>
+              <Text style={sharedStyles.buttonText}>Odśwież</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.grid}>
@@ -85,7 +100,7 @@ export function DashboardScreen(): React.JSX.Element {
             <StatTile
               key={resource.key}
               count={counts[resource.key] ?? 0}
-              resource={resource}
+              label={dashboardLabels[resource.key] ?? resource.pluralLabel}
               onPress={() =>
                 navigation.navigate('Resource', {resourceKey: resource.key})
               }
@@ -137,17 +152,17 @@ function ApiStatusBar({
 
 function StatTile({
   count,
-  resource,
+  label,
   onPress,
 }: {
   count: number;
-  resource: ResourceConfig;
+  label: string;
   onPress: () => void;
 }) {
   return (
     <Pressable onPress={onPress} style={styles.tile}>
       <Text style={styles.tileCount}>{count}</Text>
-      <Text style={styles.tileLabel}>{resource.pluralLabel}</Text>
+      <Text style={styles.tileLabel}>{label}</Text>
     </Pressable>
   );
 }
@@ -200,15 +215,32 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 12,
   },
+  loadingInline: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  refreshStatsButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
   sectionTitle: {
     color: colors.text,
     fontSize: 18,
     fontWeight: '800',
     marginBottom: 8,
   },
+  statsActions: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    justifyContent: 'flex-end',
+  },
   statsHeader: {
     alignItems: 'center',
     flexDirection: 'row',
+    gap: 12,
     justifyContent: 'space-between',
   },
   tile: {

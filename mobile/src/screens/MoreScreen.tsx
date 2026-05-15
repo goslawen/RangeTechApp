@@ -23,7 +23,7 @@ const moreEntries: ResourceKey[] = [
 const businessDescriptions: Record<ResourceKey, string> = {
   employees: 'Dodawaj, edytuj i usuwaj pracowników.',
   clients: 'Zarządzaj klientami i ich danymi kontaktowymi.',
-  devices: 'Dodawaj urządzenia i przypisuj je do klientów.',
+  devices: 'Dodawaj urządzenia i przypisuj każde urządzenie do jednego klienta.',
   taskTypes: 'Zarządzaj typami zadań produkcyjnych i serwisowych.',
   workTasks:
     'Twórz i edytuj zadania produkcyjne oraz przypisuj je do pracowników i urządzeń.',

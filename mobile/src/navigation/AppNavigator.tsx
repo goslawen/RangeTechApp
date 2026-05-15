@@ -4,8 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {DashboardScreen} from '../screens/DashboardScreen';
-import {DevicesScreen} from '../screens/DevicesScreen';
 import {MoreScreen} from '../screens/MoreScreen';
+import {ReportsScreen} from '../screens/ReportsScreen';
 import {ResourceScreen} from '../screens/ResourceScreen';
 import {ServiceScreen} from '../screens/ServiceScreen';
 import {TasksScreen} from '../screens/TasksScreen';
@@ -21,7 +21,7 @@ export type MainTabParamList = {
   Dashboard: undefined;
   Tasks: undefined;
   Service: undefined;
-  Devices: undefined;
+  Reports: undefined;
   More: undefined;
 };
 
@@ -66,9 +66,9 @@ function MainTabs() {
         options={{tabBarIcon: ServiceTabIcon, title: 'Serwis'}}
       />
       <Tab.Screen
-        name="Devices"
-        component={DevicesScreen}
-        options={{tabBarIcon: DevicesTabIcon, title: 'Urządzenia'}}
+        name="Reports"
+        component={ReportsScreen}
+        options={{tabBarIcon: ReportsTabIcon, title: 'Raporty'}}
       />
       <Tab.Screen
         name="More"
@@ -113,10 +113,12 @@ function ServiceTabIcon({color, size}: TabIconProps) {
   );
 }
 
-function DevicesTabIcon({color, size}: TabIconProps) {
+function ReportsTabIcon({color, size}: TabIconProps) {
   return (
-    <View style={[styles.phone, {borderColor: color, height: size, width: size * 0.72}]}>
-      <View style={[styles.phoneButton, {backgroundColor: color}]} />
+    <View style={[styles.document, {borderColor: color, height: size, width: size * 0.78}]}>
+      <View style={[styles.documentLine, {backgroundColor: color}]} />
+      <View style={[styles.documentLine, {backgroundColor: color}]} />
+      <View style={[styles.documentLineShort, {backgroundColor: color}]} />
     </View>
   );
 }
@@ -155,6 +157,24 @@ const styles = StyleSheet.create({
     height: 3,
     marginBottom: 3,
     width: 9,
+  },
+  document: {
+    borderRadius: 4,
+    borderWidth: 2,
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+  },
+  documentLine: {
+    borderRadius: 2,
+    height: 2,
+    marginTop: 3,
+    width: 10,
+  },
+  documentLineShort: {
+    borderRadius: 2,
+    height: 2,
+    marginTop: 3,
+    width: 7,
   },
   dot: {
     borderRadius: 3,
@@ -198,18 +218,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 4,
     justifyContent: 'center',
-  },
-  phone: {
-    alignItems: 'center',
-    borderRadius: 5,
-    borderWidth: 2,
-    justifyContent: 'flex-end',
-    paddingBottom: 3,
-  },
-  phoneButton: {
-    borderRadius: 2,
-    height: 3,
-    width: 8,
   },
   wrenchHandle: {
     borderRadius: 2,

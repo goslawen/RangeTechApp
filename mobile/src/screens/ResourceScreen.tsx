@@ -1093,6 +1093,10 @@ function getSelectEmptyMessage(
   field: ResourceField,
   form: Record<string, string>,
 ) {
+  if (resource.key === 'devices' && field.key === 'clientId') {
+    return 'Najpierw dodaj klienta w menu Więcej → Klienci.';
+  }
+
   if (resource.key === 'serviceTickets' && field.key === 'deviceId') {
     return form.clientId?.trim()
       ? 'Ten klient nie ma jeszcze przypisanych urządzeń.'
