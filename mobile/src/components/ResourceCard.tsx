@@ -25,7 +25,8 @@ export function ResourceCard({lookups = {}, resource, record, onPress}: Props) {
     : '';
 
   return (
-    <Pressable onPress={onPress} style={sharedStyles.card}>
+    <Pressable onPress={onPress} style={styles.card}>
+      <View style={styles.accent} />
       <View style={styles.row}>
         <View style={styles.main}>
           <Text style={styles.title}>{title}</Text>
@@ -139,9 +140,23 @@ function formatRelatedLabel(resourceKey: ResourceKey, record: ApiRecord) {
 }
 
 const styles = StyleSheet.create({
+  accent: {
+    backgroundColor: colors.primary,
+    borderRadius: 999,
+    height: 34,
+    left: 0,
+    position: 'absolute',
+    top: 18,
+    width: 4,
+  },
   badges: {
     alignItems: 'flex-end',
     gap: 6,
+  },
+  card: {
+    ...sharedStyles.card,
+    overflow: 'hidden',
+    paddingLeft: 18,
   },
   main: {
     flex: 1,
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 17,
     fontWeight: '800',
   },

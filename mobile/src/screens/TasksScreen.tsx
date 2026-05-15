@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     ...sharedStyles.card,
-    backgroundColor: '#e8eef7',
+    backgroundColor: colors.steelSoft,
   },
   infoHeader: {
     alignItems: 'flex-start',
@@ -360,8 +360,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   metaItem: {
-    backgroundColor: '#eef3f8',
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 8,
+    borderWidth: 1,
     flex: 1,
     padding: 10,
   },

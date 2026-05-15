@@ -73,14 +73,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   dateBox: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
-    padding: 12,
+    padding: 13,
   },
   dateButton: {
-    backgroundColor: '#eef3f8',
+    backgroundColor: colors.steelSoft,
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   dateButtonText: {
-    color: colors.header,
+    color: colors.primaryDark,
     fontSize: 13,
     fontWeight: '800',
   },
   dateText: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 15,
     fontWeight: '800',
   },

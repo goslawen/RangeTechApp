@@ -33,9 +33,10 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveBackgroundColor: colors.primarySoft,
+        tabBarActiveTintColor: colors.primaryDark,
         tabBarInactiveTintColor: colors.muted,
-        tabBarLabelStyle: {fontSize: 12, fontWeight: '700'},
+        tabBarLabelStyle: {fontSize: 11, fontWeight: '800'},
         tabBarItemStyle: {
           borderRadius: 8,
           marginHorizontal: 3,
@@ -44,10 +45,16 @@ function MainTabs() {
         tabBarStyle: {
           backgroundColor: colors.card,
           borderTopColor: colors.border,
+          borderTopWidth: 1,
+          elevation: 8,
           height: 66,
           paddingBottom: 7,
           paddingHorizontal: 7,
           paddingTop: 7,
+          shadowColor: '#10203b',
+          shadowOffset: {height: -2, width: 0},
+          shadowOpacity: 0.08,
+          shadowRadius: 8,
         },
       }}>
       <Tab.Screen

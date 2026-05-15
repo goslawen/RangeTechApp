@@ -48,7 +48,8 @@ export function MoreScreen(): React.JSX.Element {
             <Pressable
               key={resource.key}
               onPress={() => navigation.navigate('Resource', {resourceKey})}
-              style={sharedStyles.card}>
+              style={styles.menuCard}>
+              <View style={styles.menuAccent} />
               <Text style={styles.title}>{resource.pluralLabel}</Text>
               <Text style={sharedStyles.muted}>
                 {businessDescriptions[resource.key]}
@@ -63,12 +64,26 @@ export function MoreScreen(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 19,
     fontWeight: '900',
   },
+  menuAccent: {
+    backgroundColor: colors.primary,
+    borderRadius: 999,
+    height: 32,
+    left: 0,
+    position: 'absolute',
+    top: 18,
+    width: 4,
+  },
+  menuCard: {
+    ...sharedStyles.card,
+    overflow: 'hidden',
+    paddingLeft: 18,
+  },
   title: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 18,
     fontWeight: '900',
     marginBottom: 6,

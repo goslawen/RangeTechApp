@@ -161,6 +161,7 @@ function StatTile({
 }) {
   return (
     <Pressable onPress={onPress} style={styles.tile}>
+      <View style={styles.tileAccent} />
       <Text style={styles.tileCount}>{count}</Text>
       <Text style={styles.tileLabel}>{label}</Text>
     </Pressable>
@@ -170,6 +171,7 @@ function StatTile({
 const styles = StyleSheet.create({
   apiRefreshButton: {
     alignItems: 'center',
+    backgroundColor: colors.steelSoft,
     borderColor: colors.border,
     borderRadius: 14,
     borderWidth: 1,
@@ -194,6 +196,10 @@ const styles = StyleSheet.create({
     minHeight: 38,
     paddingHorizontal: 12,
     paddingVertical: 6,
+    shadowColor: '#10203b',
+    shadowOffset: {height: 1, width: 0},
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
   },
   apiStatusDot: {
     borderRadius: 5,
@@ -225,9 +231,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   sectionTitle: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 18,
-    fontWeight: '800',
+    fontWeight: '900',
     marginBottom: 8,
   },
   statsActions: {
@@ -248,14 +254,29 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
+    elevation: 2,
     minHeight: 104,
+    overflow: 'hidden',
     padding: 14,
+    shadowColor: '#10203b',
+    shadowOffset: {height: 2, width: 0},
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
     width: '48%',
+  },
+  tileAccent: {
+    backgroundColor: colors.primary,
+    height: 4,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   tileCount: {
     color: colors.header,
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '900',
+    marginTop: 6,
   },
   tileLabel: {
     color: colors.muted,
