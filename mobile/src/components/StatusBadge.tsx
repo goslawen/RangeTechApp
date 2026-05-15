@@ -88,28 +88,28 @@ function getTextStyle(variant: ReturnType<typeof getVariant>) {
 const styles = StyleSheet.create({
   badge: {
     alignSelf: 'flex-start',
-    borderWidth: 1,
     borderRadius: 999,
-    paddingHorizontal: 10,
+    borderWidth: 1,
+    paddingHorizontal: 11,
     paddingVertical: 5,
   },
   danger: {
     backgroundColor: colors.dangerSoft,
-    borderColor: '#fda29b',
+    borderColor: '#FCA5A5',
   },
   dangerText: {
     color: colors.danger,
   },
   done: {
     backgroundColor: colors.successSoft,
-    borderColor: '#99f6e4',
+    borderColor: '#86EFAC',
   },
   doneText: {
     color: colors.success,
   },
   info: {
     backgroundColor: colors.primarySoft,
-    borderColor: '#bfdbfe',
+    borderColor: '#93C5FD',
   },
   infoText: {
     color: colors.primaryDark,
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
   },
   open: {
     backgroundColor: colors.warningSoft,
-    borderColor: '#fde68a',
+    borderColor: '#FCD34D',
   },
   openText: {
     color: colors.warning,
   },
   text: {
     fontSize: 12,
-    fontWeight: '800',
+    fontWeight: '900',
   },
 });

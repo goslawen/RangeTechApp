@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {sharedStyles} from '../theme/styles';
+import {colors, sharedStyles} from '../theme/styles';
 
 type Props = {
   title: string;
@@ -21,11 +21,11 @@ export function AppHeader({title, eyebrow = 'RangeTech Service'}: Props) {
 const styles = StyleSheet.create({
   brandPill: {
     alignSelf: 'flex-start',
-    backgroundColor: 'rgba(219, 234, 254, 0.12)',
-    borderColor: 'rgba(219, 234, 254, 0.26)',
+    backgroundColor: 'rgba(37, 99, 235, 0.18)',
+    borderColor: colors.primarySoft,
     borderRadius: 8,
     borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 11,
+    paddingVertical: 6,
   },
 });

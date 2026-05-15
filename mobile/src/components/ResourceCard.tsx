@@ -141,9 +141,9 @@ function formatRelatedLabel(resourceKey: ResourceKey, record: ApiRecord) {
 
 const styles = StyleSheet.create({
   accent: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.primaryDark,
     borderRadius: 999,
-    height: 34,
+    height: 38,
     left: 0,
     position: 'absolute',
     top: 18,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   card: {
     ...sharedStyles.card,
     overflow: 'hidden',
-    paddingLeft: 18,
+    paddingLeft: 20,
   },
   main: {
     flex: 1,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.header,
-    fontSize: 17,
-    fontWeight: '800',
+    fontSize: 18,
+    fontWeight: '900',
   },
 });

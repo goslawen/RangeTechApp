@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   iconBox: {
     alignItems: 'center',
-    backgroundColor: colors.header,
+    backgroundColor: colors.primaryDark,
     borderColor: colors.primarySoft,
     borderRadius: 8,
     borderWidth: 1,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   menuAccent: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.header,
     borderRadius: 999,
     height: 34,
     left: 0,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   menuCard: {
     ...sharedStyles.card,
     overflow: 'hidden',
-    paddingLeft: 18,
+    paddingLeft: 20,
   },
   menuRow: {
     alignItems: 'flex-start',

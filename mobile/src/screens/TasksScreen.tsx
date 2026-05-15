@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   description: {
-    color: colors.header,
+    color: colors.primaryDark,
     fontSize: 14,
     fontWeight: '700',
     lineHeight: 20,
@@ -338,7 +338,8 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     ...sharedStyles.card,
-    backgroundColor: colors.steelSoft,
+    backgroundColor: colors.primarySoft,
+    borderColor: '#93C5FD',
   },
   infoHeader: {
     alignItems: 'flex-start',
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     flex: 1,
-    padding: 10,
+    padding: 11,
   },
   metaLabel: {
     color: colors.muted,
@@ -387,7 +388,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   title: {
-    color: colors.text,
+    color: colors.header,
     fontSize: 18,
     fontWeight: '900',
   },

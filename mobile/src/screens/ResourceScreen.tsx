@@ -1154,14 +1154,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     gap: 10,
-    paddingVertical: 9,
+    paddingVertical: 11,
   },
   detailsRows: {
     marginTop: 10,
   },
   detailsTitle: {
     color: colors.header,
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: '900',
   },
   detailsValue: {
@@ -1189,7 +1189,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     backgroundColor: colors.primarySoft,
-    borderColor: '#bfdbfe',
+    borderColor: '#93C5FD',
     borderRadius: 8,
     borderWidth: 1,
     padding: 12,
@@ -1204,7 +1204,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   noticeBox: {
-    backgroundColor: colors.steelSoft,
+    backgroundColor: colors.primarySoft,
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
@@ -1227,7 +1227,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     gap: 4,
-    padding: 12,
+    padding: 13,
   },
   reportPartTitle: {
     color: colors.text,
@@ -1251,7 +1251,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   selectEmpty: {
-    backgroundColor: colors.steelSoft,
+    backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
@@ -1262,12 +1262,12 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 12,
   },
   selectOptionActive: {
     backgroundColor: colors.primarySoft,
-    borderColor: colors.primary,
+    borderColor: colors.primaryDark,
   },
   selectOptionText: {
     color: colors.text,
