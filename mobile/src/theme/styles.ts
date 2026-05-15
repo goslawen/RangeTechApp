@@ -27,6 +27,7 @@ export const sharedStyles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 8,
     elevation: 1,
+    justifyContent: 'center',
     minHeight: 42,
     paddingHorizontal: 14,
     paddingVertical: 11,
@@ -110,6 +111,7 @@ export const sharedStyles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 26,
     fontWeight: '800',
+    lineHeight: 32,
     marginTop: 4,
   },
   input: {
@@ -124,12 +126,13 @@ export const sharedStyles = StyleSheet.create({
     paddingVertical: 10,
   },
   muted: {
-    color: colors.muted,
+    color: '#526276',
     fontSize: 14,
     lineHeight: 20,
   },
   screenBody: {
     gap: 14,
+    paddingBottom: 24,
     padding: 16,
   },
 });

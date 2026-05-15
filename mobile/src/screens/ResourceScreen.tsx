@@ -315,7 +315,7 @@ export function ResourceView({
       await load();
     } catch (caughtError) {
       const apiError =
-        caughtError instanceof Error ? caughtError.message : 'BĹ‚Ä…d API';
+        caughtError instanceof Error ? caughtError.message : 'Błąd API';
       setError(`Nie udało się dodać części do raportu: ${apiError}`);
     } finally {
       setIsLoading(false);

@@ -1,6 +1,6 @@
 # RangeTech Service App
 
-Projekt zaliczeniowy z aplikacji mobilnych. Aplikacja jest niezalezna od LeadFlow, ale tematycznie nawiazuje do RangeTech / LeadFlow: mobilny klient serwisowy komunikuje sie z klasycznym backendem REST API.
+Projekt zaliczeniowy z aplikacji mobilnych. Aplikacja jest niezależna od LeadFlow, ale tematycznie nawiązuje do RangeTech / LeadFlow: mobilny klient serwisowy komunikuje się z klasycznym backendem REST API.
 
 ## Struktura
 
@@ -17,8 +17,8 @@ Projekt zaliczeniowy z aplikacji mobilnych. Aplikacja jest niezalezna od LeadFlo
 - Entity Framework Core
 - SQL Server LocalDB / lokalny SQL Server
 - Swagger/OpenAPI
-- MediatR - przygotowana struktura pod CQRS/use cases
-- Mapster - przygotowana konfiguracja mapowania DTO
+- MediatR dla obsługi komend i zapytań
+- Mapster do mapowania encji i DTO
 - Docker Compose dla SQL Server jako opcja alternatywna
 
 ### Mobile
@@ -30,14 +30,42 @@ Projekt zaliczeniowy z aplikacji mobilnych. Aplikacja jest niezalezna od LeadFlo
 - Context API
 - `fetch` do komunikacji z API
 
-React Native 0.84.0 zostal utworzony aktualnym CLI `@react-native-community/cli`. Nie byl potrzebny fallback na starsza wersje stabilna.
+React Native 0.84.0 został utworzony aktualnym CLI `@react-native-community/cli`. Nie był potrzebny fallback na starszą wersję stabilną.
+
+## Funkcje
+
+Projekt zawiera:
+
+- backend ASP.NET Core Web API z klasycznym REST API,
+- bazę SQL Server LocalDB,
+- Swagger UI,
+- aplikację mobilną React Native,
+- dashboard ze statystykami,
+- pasek statusu połączenia z API,
+- podstawowe walidacje formularzy,
+- obsługę zgłoszeń i raportów serwisowych,
+- CRUD dla 8 głównych klas:
+  - Employee,
+  - Client,
+  - Device,
+  - TaskType,
+  - WorkTask,
+  - ServiceTicket,
+  - ServiceReport,
+  - ServicePart,
+- relacje z kluczami obcymi:
+  - Device -> Client,
+  - WorkTask -> Employee, Device, TaskType,
+  - ServiceTicket -> Client, Device,
+  - ServiceReport -> ServiceTicket, Employee,
+- relację wiele-do-wielu `ServiceReport` <-> `ServicePart` przez `ServiceReportPart`.
 
 ## Uruchomienie
 
 ### Visual Studio
 
-1. Otworz projekt `backend/RangeTech.ServiceApp.Api.csproj` w Visual Studio.
-2. Upewnij sie, ze masz dostepny SQL Server LocalDB (`(localdb)\MSSQLLocalDB`).
+1. Otwórz projekt `backend/RangeTech.ServiceApp.Api.csproj` w Visual Studio.
+2. Upewnij się, że masz dostępny SQL Server LocalDB (`(localdb)\MSSQLLocalDB`).
 3. W Package Manager Console albo terminalu w katalogu `backend` uruchom migracje:
 
 ```powershell
@@ -54,12 +82,14 @@ http://localhost:5000/swagger
 
 ### Terminal bez Dockera
 
-Jesli `dotnet ef` nie jest jeszcze dostepne po sklonowaniu projektu, uruchom najpierw:
+Jeśli `dotnet ef` nie jest jeszcze dostępne po sklonowaniu projektu, uruchom najpierw:
 
 ```powershell
 cd backend
 dotnet tool restore
 ```
+
+Następnie:
 
 ```powershell
 cd backend
@@ -74,7 +104,7 @@ Endpointy:
 
 ### Docker jako opcja alternatywna
 
-Projekt zawiera `backend/docker-compose.yml`, ale Docker nie jest domyslna sciezka uruchamiania. Domyslny connection string korzysta z LocalDB:
+Projekt zawiera `backend/docker-compose.yml`, ale Docker nie jest domyślną ścieżką uruchamiania. Domyślny connection string korzysta z LocalDB:
 
 ```json
 "Server=(localdb)\\MSSQLLocalDB;Database=RangeTechServiceDb;Trusted_Connection=True;TrustServerCertificate=True;"
@@ -89,7 +119,7 @@ cd mobile
 npm start
 ```
 
-Nastepnie, przy wlaczonym emulatorze Androida:
+Następnie, przy włączonym emulatorze Androida:
 
 ```powershell
 cd mobile
@@ -98,11 +128,5 @@ $env:Path = "$env:JAVA_HOME\bin;$env:Path"
 npm run android
 ```
 
-Aplikacja mobilna uzywa adresu `http://10.0.2.2:5000`, czyli dostepu emulatora Androida do backendu uruchomionego na komputerze hosta.
+Aplikacja mobilna używa adresu `http://10.0.2.2:5000`, czyli dostępu emulatora Androida do backendu uruchomionego na komputerze hosta.
 
-## Zakres aktualnego etapu
-
-- Utworzono backend i klienta mobilnego.
-- Dodano konfiguracje SQL Server, Swagger, EF Core, MediatR i Mapster.
-- Dodano podstawowa nawigacje mobilna, Context API i klienta `fetch`.
-- Nie zaimplementowano jeszcze pelnego CRUD.
