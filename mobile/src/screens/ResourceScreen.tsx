@@ -226,7 +226,11 @@ export function ResourceView({
     } catch (caughtError) {
       const apiError =
         caughtError instanceof Error ? caughtError.message : 'Błąd API';
-      setError(`Nie udało się usunąć rekordu: ${apiError}`);
+      console.log('Delete failed', {
+        error: apiError,
+        resource: resource.key,
+      });
+      setError(getDeleteErrorMessage(resource.key));
     } finally {
       setIsLoading(false);
     }
@@ -472,6 +476,21 @@ function updateFormValue(
     clientId: value,
     deviceId: selectedDeviceBelongsToClient ? previous.deviceId : '',
   };
+}
+
+function getDeleteErrorMessage(resourceKey: ResourceKey) {
+  switch (resourceKey) {
+    case 'clients':
+      return 'Nie można usunąć klienta, ponieważ ma przypisane urządzenia lub zgłoszenia serwisowe.';
+    case 'devices':
+      return 'Nie można usunąć urządzenia, ponieważ ma przypisane zadania lub zgłoszenia serwisowe.';
+    case 'employees':
+      return 'Nie można usunąć pracownika, ponieważ ma przypisane zadania lub raporty serwisowe.';
+    case 'serviceTickets':
+      return 'Nie można usunąć zgłoszenia, ponieważ ma przypisane raporty serwisowe.';
+    default:
+      return 'Nie można usunąć rekordu, ponieważ jest powiązany z innymi danymi w systemie.';
+  }
 }
 
 function validateForm(

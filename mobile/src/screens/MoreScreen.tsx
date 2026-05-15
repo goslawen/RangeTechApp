@@ -29,8 +29,18 @@ const businessDescriptions: Record<ResourceKey, string> = {
     'Twórz i edytuj zadania produkcyjne oraz przypisuj je do pracowników i urządzeń.',
   serviceTickets: 'Przyjmuj i obsługuj zgłoszenia klientów.',
   serviceReports: 'Twórz raporty na podstawie zgłoszeń serwisowych.',
-  serviceParts:
-    'Zarządzaj częściami zapasowymi wykorzystywanymi w serwisie.',
+  serviceParts: 'Zarządzaj częściami zapasowymi wykorzystywanymi w serwisie.',
+};
+
+const menuIcons: Record<ResourceKey, string> = {
+  employees: 'P',
+  clients: 'K',
+  devices: 'U',
+  taskTypes: 'T',
+  workTasks: 'Z',
+  serviceTickets: 'S',
+  serviceReports: 'R',
+  serviceParts: 'C',
 };
 
 export function MoreScreen(): React.JSX.Element {
@@ -50,10 +60,17 @@ export function MoreScreen(): React.JSX.Element {
               onPress={() => navigation.navigate('Resource', {resourceKey})}
               style={styles.menuCard}>
               <View style={styles.menuAccent} />
-              <Text style={styles.title}>{resource.pluralLabel}</Text>
-              <Text style={sharedStyles.muted}>
-                {businessDescriptions[resource.key]}
-              </Text>
+              <View style={styles.menuRow}>
+                <View style={styles.iconBox}>
+                  <Text style={styles.iconText}>{menuIcons[resource.key]}</Text>
+                </View>
+                <View style={styles.menuText}>
+                  <Text style={styles.title}>{resource.pluralLabel}</Text>
+                  <Text style={styles.description}>
+                    {businessDescriptions[resource.key]}
+                  </Text>
+                </View>
+              </View>
             </Pressable>
           );
         })}
@@ -63,15 +80,30 @@ export function MoreScreen(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  sectionTitle: {
-    color: colors.header,
-    fontSize: 19,
+  description: {
+    color: colors.muted,
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  iconBox: {
+    alignItems: 'center',
+    backgroundColor: colors.header,
+    borderColor: colors.primarySoft,
+    borderRadius: 8,
+    borderWidth: 1,
+    height: 36,
+    justifyContent: 'center',
+    width: 36,
+  },
+  iconText: {
+    color: '#ffffff',
+    fontSize: 15,
     fontWeight: '900',
   },
   menuAccent: {
     backgroundColor: colors.primary,
     borderRadius: 999,
-    height: 32,
+    height: 34,
     left: 0,
     position: 'absolute',
     top: 18,
@@ -82,10 +114,23 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingLeft: 18,
   },
+  menuRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 12,
+  },
+  menuText: {
+    flex: 1,
+    gap: 4,
+  },
+  sectionTitle: {
+    color: colors.header,
+    fontSize: 19,
+    fontWeight: '900',
+  },
   title: {
     color: colors.header,
     fontSize: 18,
     fontWeight: '900',
-    marginBottom: 6,
   },
 });
