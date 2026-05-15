@@ -1,0 +1,6 @@
+@RangeTech.ServiceApp.Api_HostAddress = http://localhost:5208
+
+GET {{RangeTech.ServiceApp.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

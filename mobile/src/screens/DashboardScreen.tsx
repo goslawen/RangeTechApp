@@ -1,0 +1,234 @@
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {ApiHealth, ApiRecord, getRecords} from '../api/client';
+import {AppHeader} from '../components/AppHeader';
+import {resources, ResourceConfig} from '../features/resources';
+import {RootStackParamList} from '../navigation/AppNavigator';
+import {colors, sharedStyles} from '../theme/styles';
+import {useServiceApp} from '../context/ServiceAppContext';
+
+type Navigation = NativeStackNavigationProp<RootStackParamList>;
+
+export function DashboardScreen(): React.JSX.Element {
+  const navigation = useNavigation<Navigation>();
+  const {health, isLoading, error, refreshHealth} = useServiceApp();
+  const [counts, setCounts] = useState<Record<string, number>>({});
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [statsError, setStatsError] = useState<string | null>(null);
+
+  const loadStats = useCallback(async () => {
+    setStatsLoading(true);
+    setStatsError(null);
+
+    try {
+      const entries = await Promise.all(
+        resources.map(async resource => {
+          const records: ApiRecord[] = await getRecords(resource.endpoint);
+          return [resource.key, records.length] as const;
+        }),
+      );
+      setCounts(Object.fromEntries(entries));
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error ? caughtError.message : 'Błąd API';
+      setStatsError(message);
+    } finally {
+      setStatsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshHealth();
+    loadStats();
+  }, [loadStats, refreshHealth]);
+
+  return (
+    <View style={sharedStyles.container}>
+      <AppHeader title="Panel operacyjny" />
+      <ScrollView
+        contentContainerStyle={sharedStyles.screenBody}
+        refreshControl={
+          <RefreshControl refreshing={statsLoading} onRefresh={loadStats} />
+        }>
+        <ApiStatusBar
+          error={error}
+          health={health}
+          isLoading={isLoading}
+          onRefresh={refreshHealth}
+        />
+
+        {statsError ? (
+          <View style={sharedStyles.errorBox}>
+            <Text style={sharedStyles.errorText}>
+              Nie udało się pobrać statystyk: {statsError}
+            </Text>
+          </View>
+        ) : null}
+
+        <View style={styles.statsHeader}>
+          <Text style={styles.sectionTitle}>Statystyki</Text>
+          {statsLoading ? <ActivityIndicator color={colors.primary} /> : null}
+        </View>
+
+        <View style={styles.grid}>
+          {resources.map(resource => (
+            <StatTile
+              key={resource.key}
+              count={counts[resource.key] ?? 0}
+              resource={resource}
+              onPress={() =>
+                navigation.navigate('Resource', {resourceKey: resource.key})
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+function ApiStatusBar({
+  error,
+  health,
+  isLoading,
+  onRefresh,
+}: {
+  error: string | null;
+  health: ApiHealth | null;
+  isLoading: boolean;
+  onRefresh: () => Promise<void>;
+}) {
+  const statusColor = isLoading
+    ? colors.muted
+    : error || !health
+      ? colors.danger
+      : '#16a34a';
+
+  return (
+    <View style={styles.apiStatusBar}>
+      <Text style={styles.apiStatusText}>RangeTech Service API</Text>
+      <View style={styles.apiStatusRight}>
+        <View style={[styles.apiStatusDot, {backgroundColor: statusColor}]} />
+        <Pressable
+          accessibilityLabel="Odśwież status API"
+          hitSlop={8}
+          onPress={onRefresh}
+          style={styles.apiRefreshButton}>
+          {isLoading ? (
+            <ActivityIndicator color={colors.header} size="small" />
+          ) : (
+            <Text style={styles.apiRefreshIcon}>↻</Text>
+          )}
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+function StatTile({
+  count,
+  resource,
+  onPress,
+}: {
+  count: number;
+  resource: ResourceConfig;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable onPress={onPress} style={styles.tile}>
+      <Text style={styles.tileCount}>{count}</Text>
+      <Text style={styles.tileLabel}>{resource.pluralLabel}</Text>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  apiRefreshButton: {
+    alignItems: 'center',
+    borderColor: colors.border,
+    borderRadius: 14,
+    borderWidth: 1,
+    height: 28,
+    justifyContent: 'center',
+    width: 28,
+  },
+  apiRefreshIcon: {
+    color: colors.header,
+    fontSize: 16,
+    fontWeight: '900',
+    lineHeight: 18,
+  },
+  apiStatusBar: {
+    alignItems: 'center',
+    backgroundColor: colors.card,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minHeight: 38,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  apiStatusDot: {
+    borderRadius: 5,
+    height: 10,
+    width: 10,
+  },
+  apiStatusRight: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
+  },
+  apiStatusText: {
+    color: colors.header,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  sectionTitle: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '800',
+    marginBottom: 8,
+  },
+  statsHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tile: {
+    backgroundColor: colors.card,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    minHeight: 104,
+    padding: 14,
+    width: '48%',
+  },
+  tileCount: {
+    color: colors.header,
+    fontSize: 28,
+    fontWeight: '900',
+  },
+  tileLabel: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 8,
+  },
+});

@@ -1,0 +1,79 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.lscache
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# ASP.NET / local settings
+appsettings.Local.json
+*.Development.local.json
+
+# Node / React Native
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.yarn/
+.pnp.*
+.expo/
+.metro-health-check*
+
+# React Native bundle outputs
+*.jsbundle
+*.bundle
+*.bundle.map
+
+# Android
+**/android/.gradle/
+**/android/app/build/
+**/android/build/
+**/android/local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# iOS / CocoaPods
+**/ios/Pods/
+**/ios/build/
+**/ios/DerivedData/
+**/*.xcworkspace/xcuserdata/
+**/*.xcodeproj/xcuserdata/
+*.xcuserstate
+
+# Gradle
+.gradle/
+build/
+
+# Java / Kotlin
+*.class
+*.jar
+*.war
+*.ear
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.log
