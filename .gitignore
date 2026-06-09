@@ -61,6 +61,7 @@ build/
 *.ear
 
 # Editors
+.vs/
 .idea/
 .vscode/
 *.swp
@@ -77,3 +78,6 @@ temp/
 *.tmp
 *.temp
 *.log
+
+# Nested workspaces
+leadflow/
